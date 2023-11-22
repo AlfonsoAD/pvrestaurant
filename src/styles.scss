@@ -1,1 +1,172 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+
+html, body { height: 100%; width: 100%; font-family:'Rubik', sans-serif; }
+body { margin: 0; }
+
+
+$md-primary: (
+    50 : #e1e1f4,
+    100 : #b5b3e4,
+    200 : #8381d3,
+    300 : #514ec1,
+    400 : #2c28b3,
+    500 : #0702a6,
+    600 : #06029e,
+    700 : #050195,
+    800 : #04018b,
+    900 : #02017b,
+    A100 : #a8a8ff,
+    A200 : #7575ff,
+    A400 : #4242ff,
+    A700 : #2929ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$md-accent: (
+    50 : #fff0f1,
+    100 : #ffdadd,
+    200 : #ffc1c6,
+    300 : #ffa8af,
+    400 : #ff969d,
+    500 : #ff838c,
+    600 : #ff7b84,
+    700 : #ff7079,
+    800 : #ff666f,
+    900 : #ff535c,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #fff8f8,
+    A700 : #ffdfe0,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-warn: (
+    50 : #e6f2ff,
+    100 : #c0deff,
+    200 : #96c8ff,
+    300 : #6cb1ff,
+    400 : #4da1ff,
+    500 : #2d90ff,
+    600 : #2888ff,
+    700 : #227dff,
+    800 : #1c73ff,
+    900 : #1161ff,
+    A100 : #ffffff,
+    A200 : #f8faff,
+    A400 : #c5d6ff,
+    A700 : #acc5ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$my-primary: mat.define-palette($md-primary, 500);
+$my-accent: mat.define-palette($md-accent, 600);
+$my-warn: mat.define-palette($md-warn, 500);
+
+$custom-theme: mat.define-light-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+    warn: $my-warn
+  )
+));
+
+@include mat.all-component-themes($custom-theme);
+
+li{
+    list-style: none !important;
+}
+
+/* Custom Flex */
+
+.d-flex{
+    display: flex !important;
+}
+
+.flex-column{
+    flex-direction: column !important;
+}
+
+.flex-row{
+    flex-direction: row !important;
+}
+
+.justify-center{
+    justify-content: center !important;
+}
+
+.justify-start{
+    justify-content: flex-start !important;
+}
+
+.justify-end{
+    justify-content: flex-end !important;
+}
+
+.justify-between{
+    justify-content: space-between !important;
+}
+
+.align-center{
+    align-items: center !important;
+}
+
+.align-start{
+    align-items: flex-start !important;
+}
+
+.align-end{
+    align-items: flex-end !important;
+}
+
+
+/* Custom width */
+
+.w-100{
+    width: 100% !important;
+}

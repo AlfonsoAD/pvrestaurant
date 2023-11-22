@@ -1,0 +1,13 @@
+<article
+  class="card d-flex flex-column mat-elevation-z4 justify-center align-center"
+  [ngStyle]="{ gap: '0.5rem' }"
+>
+  <img
+    ngSrc="{{ module.image }}"
+    width="110"
+    height="110"
+    alt="Module {{ module.name }}"
+    priority="true"
+  />
+  <h1>{{ module.name }}</h1>
+</article>

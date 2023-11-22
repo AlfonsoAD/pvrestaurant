@@ -1,0 +1,21 @@
+<button
+  type="button"
+  mat-icon-button
+  [matMenuTriggerFor]="menu"
+  [ngStyle]="{ color: '#0702a6' }"
+>
+  <mat-icon>settings</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button
+    type="button"
+    mat-button
+    color="primary"
+    class="w-100"
+    [ngStyle]="{ 'font-size': '16px', 'font-weight': 'bold' }"
+    (click)="logOut($event)"
+  >
+    <mat-icon [ngStyle]="{ 'font-size': '21px' }">exit_to_app</mat-icon>
+    Log Out
+  </button>
+</mat-menu>

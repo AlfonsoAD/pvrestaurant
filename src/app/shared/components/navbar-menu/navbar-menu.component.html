@@ -1,0 +1,68 @@
+<mat-toolbar class="toolbar d-flex flex-row justify-between mat-elevation-z4">
+  <a [routerLink]="['/menu/dashboard']"
+    ><h1>{{ titleApp }}</h1></a
+  >
+  <nav class="d-flex flex-row nav" [ngStyle]="{ gap: '1rem' }">
+    @for (module of modules; track $index) {
+    <li>
+      <a
+        [routerLink]="[module.route]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon>{{ module.icon }} </mat-icon> {{ module.name }}</a
+      >
+    </li>
+    }
+  </nav>
+
+  <section class="d-flex flex-row" [ngStyle]="{ gap: '0.5rem' }">
+    <button
+      type="button"
+      mat-button
+      color="primary"
+      class="menu"
+      [matMenuTriggerFor]="menu"
+      [ngStyle]="{
+        position: 'relative',
+        top: '7px',
+        'font-size': '25px',
+        'font-weight': 'bold'
+      }"
+    >
+      <mat-icon
+        [ngStyle]="{ position: 'relative', top: '-3px', 'font-size': '24px' }"
+        >menu</mat-icon
+      >
+      Menu
+    </button>
+    <mat-menu #menu="matMenu" class="menu d-flex flex-row">
+      @for (module of modules; track $index) {
+      <li [ngStyle]="{ padding: '5px', margin: '5px' }">
+        <a
+          [routerLink]="[module.route]"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>{{ module.icon }} </mat-icon> {{ module.name }}</a
+        >
+      </li>
+      }
+    </mat-menu>
+    <div
+      class="d-flex flex-row"
+      [ngStyle]="{ position: 'relative', top: '8px' }"
+    >
+      <span [matTooltip]="'Role'"
+        ><h1>{{ roles[(user()?.roles)![0]] }}</h1></span
+      >
+      &nbsp;
+      <span [matTooltip]="'Username'"
+        ><h1 [ngStyle]="{ color: '#2d90ff' }">{{ user()?.username }}</h1></span
+      >
+    </div>
+    <app-settings-menu></app-settings-menu>
+  </section>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

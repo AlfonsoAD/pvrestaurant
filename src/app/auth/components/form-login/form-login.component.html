@@ -1,0 +1,27 @@
+<div class="container-form" [ngStyle]="{ gap: '0.5rem' }">
+  <h1>{{ hello }}</h1>
+  <h2>{{ ready }}</h2>
+  <form [formGroup]="form" #ngForm class="form">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        formControlName="email"
+        placeholder="example@example.com"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" />
+    </mat-form-field>
+    <button
+      type="button"
+      mat-flat-button
+      color="primary"
+      class="w-100"
+      (click)="onSubmit($event)"
+    >
+      Sign In
+    </button>
+  </form>
+</div>

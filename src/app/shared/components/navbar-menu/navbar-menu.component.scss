@@ -1,0 +1,44 @@
+.toolbar {
+    background-color: white !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+a > h1 {
+    margin: 0px;
+    font-weight: bold !important;
+    font-size: 25px !important;
+    color: #2d90ff;
+}
+
+li > a {
+    color: #2d90ff; 
+    font-weight:600;
+}
+
+mat-icon{
+    position: relative;
+    top:5px
+}
+
+span > h1{
+    margin: 0px;
+    font-weight: bold !important;
+    font-size: 25px !important;
+    color: #0702a6;
+}
+
+@media screen and (min-width:1069px) {
+    .menu{
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 1070px) {
+    .nav{
+        display: none !important;
+    }
+}
+
