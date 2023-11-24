@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
-  baseURL: 'https://devapipvrestaurant.onrender.com/api/',
+  production: true,
+  baseURL: 'https://apipvrestaurant.onrender.com/api/',
   cloudinaryURL: 'https://res.cloudinary.com/dhbyqfmge/',
 };
