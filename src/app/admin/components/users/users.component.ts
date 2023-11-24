@@ -9,4 +9,6 @@ import { TableUsersComponent } from '../table-users/table-users.component';
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
-export class UsersComponent {}
+export class UsersComponent {
+  constructor() {}
+}
