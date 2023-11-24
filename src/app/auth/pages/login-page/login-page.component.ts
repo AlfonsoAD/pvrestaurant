@@ -17,7 +17,7 @@ export class LoginPageComponent {
     this.authService.validateToken().subscribe({
       next: (response: any) => {
         if (response) {
-          this.router.navigate(['/menu/dashboard']);
+          this.router.navigate(['/dashboard/menu']);
         } else {
           this.router.navigate(['/']);
         }

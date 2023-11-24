@@ -5,6 +5,8 @@ import { authenticatedGuard } from './guards/authenticated.guard';
 import { notLoginGuard } from './guards/not-login.guard';
 import { validateTokenGuard } from './guards/validate-token.guard';
 import { DashboardComponent } from './shared/pages/dashboard/dashboard.component';
+import { MainCatalogsComponent } from './admin/pages/main-catalogs/main-catalogs.component';
+import { roleAdminGuard } from './guards/role-admin.guard';
 
 export const routes: Routes = [
   {
@@ -14,12 +16,17 @@ export const routes: Routes = [
   },
   {
     title: 'PV Restaurant Menu',
-    path: 'menu',
+    path: 'dashboard',
     component: MainMenuComponent,
     children: [
       {
-        path: 'dashboard',
+        path: 'menu',
         component: DashboardComponent,
+      },
+      {
+        path: 'admin',
+        component: MainCatalogsComponent,
+        canActivate: [roleAdminGuard],
       },
     ],
     canActivate: [authenticatedGuard, validateTokenGuard],

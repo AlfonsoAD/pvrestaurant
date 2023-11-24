@@ -9,6 +9,7 @@ import { SettingsMenuComponent } from '../settings-menu/settings-menu.component'
 import { modules } from '../../../utils/arrays';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RoleUserDirective } from '../../../directives/role-user.directive';
 
 @Component({
   selector: 'app-navbar-menu',
@@ -24,6 +25,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     SettingsMenuComponent,
     MatMenuModule,
     MatTooltipModule,
+    RoleUserDirective,
   ],
   templateUrl: './navbar-menu.component.html',
   styleUrl: './navbar-menu.component.scss',

@@ -1,25 +1,25 @@
 export const modules = [
   {
     name: 'Cash register',
-    route: '',
+    route: '/dashboard/cash-register',
     icon: 'shopping_cart',
     image: 'assets/images/cashregister.png',
   },
   {
     name: 'Seating area',
-    route: '',
+    route: 'dashboard/seating-area',
     icon: 'restaurant',
     image: 'assets/images/seatingarea.png',
   },
   {
     name: 'Admin Panel',
-    route: '',
+    route: '/dashboard/admin',
     icon: 'admin_panel_settings',
     image: 'assets/images/adminpanel.png',
   },
   {
     name: 'Settings',
-    route: '',
+    route: '/dashboard/settings',
     icon: 'settings',
     image: 'assets/images/settings.png',
   },

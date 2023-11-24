@@ -1,0 +1,31 @@
+.container{
+    margin: 1rem;
+    border-radius: 5px;
+    height: 100%;
+}
+
+.menu{
+    width:200px !important;
+    background-color: white
+}
+
+.display{
+    background-color: white
+}
+
+h2{
+    font-weight: bold;
+    color: #0702a6;
+}
+
+.item{
+    background-color: white;
+    height: 2rem;
+    padding: 5px;
+}
+
+li{
+    color: #0702a6;
+    font-weight: bold;
+    cursor: pointer;
+}

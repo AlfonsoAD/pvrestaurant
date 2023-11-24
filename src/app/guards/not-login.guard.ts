@@ -8,7 +8,7 @@ export const notLoginGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if (authService.statusAuth === AuthStatus.authenticated) {
-    router.navigate(['/menu/dashboard']);
+    router.navigate(['/dashboard/menu']);
     return false;
   }
 

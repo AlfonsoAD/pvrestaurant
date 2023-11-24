@@ -65,7 +65,7 @@ export class FormLoginComponent {
     this.authService.postLogin(body).subscribe({
       next: (response: Response) => {
         if (response.ok) {
-          this.router.navigate(['/menu/dashboard']);
+          this.router.navigate(['/dashboard/menu']);
         }
       },
       error: (error) => {

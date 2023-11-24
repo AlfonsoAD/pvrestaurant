@@ -1,8 +1,12 @@
-<mat-toolbar class="toolbar d-flex flex-row justify-between mat-elevation-z4">
-  <a [routerLink]="['/menu/dashboard']"
+<mat-toolbar class="toolbar d-flex flex-row justify-between mat-elevation-z6">
+  <a [routerLink]="['/dashboard/menu']"
     ><h1>{{ titleApp }}</h1></a
   >
-  <nav class="d-flex flex-row nav" [ngStyle]="{ gap: '1rem' }">
+  <nav
+    class="d-flex flex-row nav"
+    [ngStyle]="{ gap: '1rem' }"
+    *appRoleUser="['admin']"
+  >
     @for (module of modules; track $index) {
     <li>
       <a
@@ -22,6 +26,7 @@
       mat-button
       color="primary"
       class="menu"
+      *appRoleUser="['admin']"
       [matMenuTriggerFor]="menu"
       [ngStyle]="{
         position: 'relative',
