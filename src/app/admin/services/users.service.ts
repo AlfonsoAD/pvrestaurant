@@ -39,9 +39,7 @@ export class UsersService {
     const headers = new HttpHeaders();
     return this.httpClient.post(url, formData, { headers }).pipe(
       take(1),
-      map((response: any) => {
-        if (response.ok) return response.ok;
-      })
+      map((response: any) => response.ok)
     );
   }
 

@@ -1,0 +1,51 @@
+<mat-dialog-content class="d-flex flex-column" [ngStyle]="{ gap: '0.5rem' }">
+  <div
+    class="d-flex flex-row justify-between align-center"
+    [ngStyle]="{ height: '2rem' }"
+  >
+    <h1 mat-dialog-title>Add table</h1>
+    <button mat-icon-button mat-dialog-close color="primary">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider role="separator" class="divider"></mat-divider>
+  <div
+    class="d-flex flex-column"
+    [ngStyle]="{ gap: '0.5rem', 'margin-top': '10px' }"
+  >
+    <form
+      #ngForm
+      [formGroup]="form"
+      class="d-flex flex-column"
+      [ngStyle]="{ gap: '0.5rem' }"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Number</mat-label>
+        <input type="number" min="1" matInput formControlName="number" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Capacity</mat-label>
+        <input type="number" min="1" matInput formControlName="capacity" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Table Status</mat-label>
+        <mat-select formControlName="status">
+          @for (status of tableStatus; track $index) {
+          <mat-option [value]="status">{{ status }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex flex-row justify-end align-center">
+  <button
+    type="button"
+    mat-flat-button
+    color="primary"
+    (click)="onSubmit($event)"
+  >
+    <mat-icon>save</mat-icon>
+    Save
+  </button>
+</mat-dialog-actions>

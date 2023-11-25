@@ -176,7 +176,10 @@ export class ModalUserComponent implements OnInit {
       error: (error) => {
         Swal.fire({
           title: 'Error',
-          text: error.error.message || 'An error has occurred',
+          text:
+            error.error.error ||
+            error.error.data_error ||
+            'An error has occurred',
           icon: 'error',
           showCancelButton: false,
           showConfirmButton: false,
@@ -206,7 +209,10 @@ export class ModalUserComponent implements OnInit {
       error: (error) => {
         Swal.fire({
           title: 'Error',
-          text: error.error.message || 'An error has occurred',
+          text:
+            error.error.error ||
+            error.error.data_error ||
+            'An error has occurred',
           icon: 'error',
           showCancelButton: false,
           showConfirmButton: false,
