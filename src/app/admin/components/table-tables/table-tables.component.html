@@ -1,5 +1,5 @@
 <section class="d-flex flex-column container">
-  <h2 class="d-flex justify-center align-center">List of users</h2>
+  <h2 class="d-flex justify-center align-center">List of tables</h2>
   <div
     class="d-flex justify-between align-center"
     [ngStyle]="{ 'padding-left': '8px' }"
@@ -16,7 +16,7 @@
         (click)="onOpenModal($event)"
       >
         <mat-icon>add</mat-icon>
-        Add user
+        Add table
       </button>
       <button
         type="button"
@@ -31,33 +31,21 @@
   </div>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="numberemployee">
-      <th mat-header-cell *matHeaderCellDef><strong>No. Employee</strong></th>
-      <td mat-cell *matCellDef="let element">{{ element.number_employee }}</td>
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef><strong>No. Table</strong></th>
+      <td mat-cell *matCellDef="let element">{{ element.number }}</td>
     </ng-container>
-    <ng-container matColumnDef="first_name">
-      <th mat-header-cell *matHeaderCellDef><strong>First Name</strong></th>
+    <ng-container matColumnDef="capacity">
+      <th mat-header-cell *matHeaderCellDef><strong>Capacity</strong></th>
       <td mat-cell *matCellDef="let element">
-        {{ element.first_name || "N/A" }}
+        {{ element.capacity || "N/A" }}
       </td>
     </ng-container>
-    <ng-container matColumnDef="last_name">
-      <th mat-header-cell *matHeaderCellDef><strong>Last Name</strong></th>
+    <ng-container matColumnDef="table_status">
+      <th mat-header-cell *matHeaderCellDef><strong>Table status</strong></th>
       <td mat-cell *matCellDef="let element">
-        {{ element.last_name || "N/A" }}
+        {{ element.table_status || "N/A" }}
       </td>
-    </ng-container>
-    <ng-container matColumnDef="username">
-      <th mat-header-cell *matHeaderCellDef><strong>Username</strong></th>
-      <td mat-cell *matCellDef="let element">{{ element.username }}</td>
-    </ng-container>
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef><strong>Email</strong></th>
-      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-    </ng-container>
-    <ng-container matColumnDef="roles">
-      <th mat-header-cell *matHeaderCellDef><strong>Role</strong></th>
-      <td mat-cell *matCellDef="let element">{{ element.roles[0] }}</td>
     </ng-container>
     <ng-container matColumnDef="is_active">
       <th mat-header-cell *matHeaderCellDef><strong>Active</strong></th>
@@ -67,39 +55,11 @@
         }
       </td>
     </ng-container>
-    <ng-container matColumnDef="image">
-      <th mat-header-cell *matHeaderCellDef><strong>Image</strong></th>
-      <td mat-cell *matCellDef="let element">
-        @if (element.image) {
-        <img
-          ngSrc="{{ cloudinaryURL }}{{ element.image }}"
-          alt="Image of {{ element.username }}"
-          width="50"
-          height="50"
-        />
-        }@else {
-        <img
-          ngSrc="assets/images/userdefault.png"
-          alt="Image of {{ element.username }}"
-          width="45"
-          height="45"
-        />
-        }
-      </td>
-    </ng-container>
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef><strong>Actions</strong></th>
       <td mat-cell *matCellDef="let element">
         <button
-          [matTooltip]="'Change password'"
-          mat-icon-button
-          color="primary"
-          (click)="onEditPassword($event, element)"
-        >
-          <mat-icon>power_input</mat-icon>
-        </button>
-        <button
-          [matTooltip]="'Edit user'"
+          [matTooltip]="'Edit table'"
           mat-icon-button
           color="primary"
           (click)="onEdit($event, element)"
@@ -107,7 +67,7 @@
           <mat-icon>edit</mat-icon>
         </button>
         <button
-          [matTooltip]="'Delete user'"
+          [matTooltip]="'Delete table'"
           mat-icon-button
           class="delete"
           (click)="onDelete($event, element)"

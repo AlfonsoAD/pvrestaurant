@@ -71,7 +71,7 @@ export class FormLoginComponent {
       error: (error) => {
         Swal.fire({
           title: 'Error',
-          text: error.message,
+          text: error.error.error || error.error.data_error || error.message,
           icon: 'error',
           showConfirmButton: false,
           showCancelButton: false,
