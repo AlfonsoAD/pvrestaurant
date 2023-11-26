@@ -9,12 +9,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Table } from '../../../interfaces/table.interface';
-import { TableService } from '../../services/table.service';
-import { ModalTableComponent } from '../modal-table/modal-table.component';
+import { CategoriesService } from '../../services/categories.service';
+import { Category } from '../../../interfaces/categories.interface';
+import { ModalCategorieComponent } from '../modal-categorie/modal-categorie.component';
 
 @Component({
-  selector: 'app-table-tables',
+  selector: 'app-table-categories',
   standalone: true,
   imports: [
     CommonModule,
@@ -27,28 +27,25 @@ import { ModalTableComponent } from '../modal-table/modal-table.component';
     MatDialogModule,
     MatTooltipModule,
   ],
-  templateUrl: './table-tables.component.html',
-  styleUrl: './table-tables.component.scss',
+  templateUrl: './table-categories.component.html',
+  styleUrl: './table-categories.component.scss',
 })
-export class TableTablesComponent implements OnInit {
+export class TableCategoriesComponent implements OnInit {
   displayedColumns: string[] = [
-    'number',
-    'capacity',
-    'table_status',
+    'name',
+    'description',
     'is_active',
+    'created_at',
     'actions',
   ];
-  tables: Table[] = [];
-  dataSource = new MatTableDataSource<Table>(this.tables);
+  categories: Category[] = [];
+  dataSource = new MatTableDataSource<Category>(this.categories);
   @ViewChild('paginator') paginator: MatPaginator | any;
 
-  reverseConvertStatus: { [key: string]: string } = {
-    available: 'Available',
-    busy: 'Busy',
-    outService: 'Out of service',
-  };
-
-  constructor(private tableService: TableService, private dialog: MatDialog) {}
+  constructor(
+    private categoriesService: CategoriesService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.syncData();
@@ -57,36 +54,17 @@ export class TableTablesComponent implements OnInit {
   syncData(event?: Event) {
     event?.preventDefault();
     event?.stopPropagation();
-    this.getTables();
+    this.getCategories();
   }
 
-  getTables() {
-    this.tableService.getTables().subscribe({
+  getCategories() {
+    this.categoriesService.getCategories().subscribe({
       next: (response: any) => {
         if (response.ok) {
-          this.tables = response.results.map((table: Table) => {
-            return {
-              ...table,
-              table_status: this.reverseConvertStatus[table.table_status[0]],
-            };
-          });
-          this.dataSource.data = this.tables;
+          this.categories = response.results;
+          this.dataSource.data = this.categories;
           this.dataSource.paginator = this.paginator;
         }
-      },
-      error: (error) => {
-        Swal.fire({
-          title: 'Error!',
-          text:
-            error.error.error ||
-            error.error.data_error ||
-            "Error can't get the tables",
-          icon: 'error',
-          showCancelButton: false,
-          showConfirmButton: false,
-          timer: 2500,
-          timerProgressBar: true,
-        });
       },
     });
   }
@@ -94,61 +72,57 @@ export class TableTablesComponent implements OnInit {
   onOpenModal(event: Event) {
     event.preventDefault();
     event.stopPropagation();
-    const modalTable = this.dialog.open(ModalTableComponent, {
+
+    const modalCategory = this.dialog.open(ModalCategorieComponent, {
       width: '300px',
     });
-
-    modalTable.afterClosed().subscribe((result) => {
+    modalCategory.afterClosed().subscribe((result) => {
       if (result?.ok) this.syncData();
     });
   }
 
-  onEdit(event: Event, table: Table) {
+  onEdit(event: Event, category: Category) {
     event.preventDefault();
     event.stopPropagation();
-    const modalTable = this.dialog.open(ModalTableComponent, {
-      width: '300px',
-      data: {
-        isEdit: true,
-        table,
-      },
-    });
 
-    modalTable.afterClosed().subscribe((result) => {
+    const modalCategory = this.dialog.open(ModalCategorieComponent, {
+      width: '300px',
+      data: { isEdit: true, category },
+    });
+    modalCategory.afterClosed().subscribe((result) => {
       if (result?.ok) this.syncData();
     });
   }
 
-  onDelete(event: Event, table: Table) {
+  onDelete(event: Event, category: Category) {
     event.preventDefault();
     event.stopPropagation();
     Swal.fire({
-      title: 'Are you sure?',
-      text: `You won't be able to revert this!`,
+      title: `Are you sure you want to delete this category ${category?.name}?`,
       icon: 'question',
       showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: 'Yes, delete',
+      cancelButtonText: 'No, cancel',
       confirmButtonColor: '#0702a6',
       cancelButtonColor: '#de3131',
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        this.deleteTable(table.id);
+        this.deleteCategory(category.id);
       }
     });
   }
 
-  deleteTable(id: number) {
-    this.tableService.deleteTable(id).subscribe({
+  deleteCategory(idCategory: number) {
+    this.categoriesService.deleteCategory(idCategory).subscribe({
       next: (response: any) => {
-        if (response) {
+        if (response.ok) {
           Swal.fire({
-            title: 'Deleted!',
-            text: 'The table has been deleted.',
+            text: response.results,
             icon: 'success',
-            showCancelButton: false,
             showConfirmButton: false,
+            showCancelButton: false,
             timer: 2500,
             timerProgressBar: true,
           });
@@ -157,14 +131,14 @@ export class TableTablesComponent implements OnInit {
       },
       error: (error) => {
         Swal.fire({
-          title: 'Error!',
+          title: 'Error',
           text:
             error.error.error ||
             error.error.data_error ||
-            "Error can't delete the table",
+            'An error has occurred',
           icon: 'error',
-          showCancelButton: false,
           showConfirmButton: false,
+          showCancelButton: false,
           timer: 2500,
           timerProgressBar: true,
         });

@@ -1,0 +1,22 @@
+.container{
+    margin: 1.5rem;
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  width: fit-content;
+  text-align: center;
+  margin: none;
+}
+
+tr.mat-row {
+  border-bottom: rgba(0, 0, 0, 0.12) !important;
+}
+
+h2{
+    color: #2d90ff;
+}

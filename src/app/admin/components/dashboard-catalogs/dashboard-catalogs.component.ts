@@ -4,6 +4,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { UsersComponent } from '../users/users.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TablesComponent } from '../tables/tables.component';
+import { CategoriesComponent } from '../categories/categories.component';
+import { ProductsComponent } from '../products/products.component';
 
 @Component({
   selector: 'app-dashboard-catalogs',
@@ -14,6 +16,8 @@ import { TablesComponent } from '../tables/tables.component';
     UsersComponent,
     MatTabsModule,
     TablesComponent,
+    CategoriesComponent,
+    ProductsComponent,
   ],
   templateUrl: './dashboard-catalogs.component.html',
   styleUrl: './dashboard-catalogs.component.scss',
