@@ -12,11 +12,24 @@
     </mat-form-field>
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>Password</mat-label>
-      <input matInput formControlName="password" />
+      <input
+        [type]="showPassword ? 'password' : 'text'"
+        matInput
+        formControlName="password"
+      />
     </mat-form-field>
+    <div
+      class="d-flex justify-start align-center w-100"
+      [ngStyle]="{ position: 'relative', bottom: '2rem' }"
+    >
+      <mat-checkbox (change)="onChangeShowHidePassword($event)">{{
+        showPassword ? "Show password" : "Hide password"
+      }}</mat-checkbox>
+    </div>
     <button
       type="button"
       mat-flat-button
+      [ngStyle]="{ position: 'relative', bottom: '1.5rem' }"
       color="primary"
       class="w-100"
       (click)="onSubmit($event)"

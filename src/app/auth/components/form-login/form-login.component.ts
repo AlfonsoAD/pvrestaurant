@@ -7,6 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
+import {
+  MatCheckboxChange,
+  MatCheckboxModule,
+} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-form-login',
@@ -17,6 +21,7 @@ import { AuthService } from '../../services/auth.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatCheckboxModule,
   ],
   templateUrl: './form-login.component.html',
   styleUrl: './form-login.component.scss',
@@ -24,6 +29,7 @@ import { AuthService } from '../../services/auth.service';
 export class FormLoginComponent {
   hello = 'Hello, welcome';
   ready = 'Ready to start?';
+  showPassword: boolean = true;
 
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -80,5 +86,9 @@ export class FormLoginComponent {
         });
       },
     });
+  }
+
+  onChangeShowHidePassword(event: MatCheckboxChange) {
+    this.showPassword = event.checked ? false : true;
   }
 }

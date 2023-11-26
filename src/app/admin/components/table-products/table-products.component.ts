@@ -1,20 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import Swal from 'sweetalert2';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { environment } from '../../../../environments/environment.development';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Table } from '../../../interfaces/table.interface';
-import { TableService } from '../../services/table.service';
-import { ModalTableComponent } from '../modal-table/modal-table.component';
+import { ProductsService } from '../../services/products.service';
+import Swal from 'sweetalert2';
+import { Product } from '../../../interfaces/products.interface';
+import { ModalProductComponent } from '../modal-product/modal-product.component';
 
 @Component({
-  selector: 'app-table-tables',
+  selector: 'app-table-products',
   standalone: true,
   imports: [
     CommonModule,
@@ -26,61 +27,55 @@ import { ModalTableComponent } from '../modal-table/modal-table.component';
     MatPaginatorModule,
     MatDialogModule,
     MatTooltipModule,
+    NgOptimizedImage,
   ],
-  templateUrl: './table-tables.component.html',
-  styleUrl: './table-tables.component.scss',
+  templateUrl: './table-products.component.html',
+  styleUrl: './table-products.component.scss',
 })
-export class TableTablesComponent implements OnInit {
+export class TableProductsComponent implements OnInit {
+  public cloudinaryURL = environment.cloudinaryURL;
+
   displayedColumns: string[] = [
-    'number',
-    'capacity',
-    'table_status',
+    'name',
+    'description',
+    'price',
+    'image',
     'is_active',
+    'created_at',
     'actions',
   ];
-  tables: Table[] = [];
-  dataSource = new MatTableDataSource<Table>(this.tables);
+  products: Product[] = [];
+  dataSource = new MatTableDataSource<Product>(this.products);
   @ViewChild('paginator') paginator: MatPaginator | any;
 
-  reverseConvertStatus: { [key: string]: string } = {
-    available: 'Available',
-    busy: 'Busy',
-    outService: 'Out of service',
-  };
+  constructor(
+    private productService: ProductsService,
+    private dialog: MatDialog
+  ) {}
 
-  constructor(private tableService: TableService, private dialog: MatDialog) {}
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.syncData();
   }
 
   syncData(event?: Event) {
     event?.preventDefault();
     event?.stopPropagation();
-    this.getTables();
+    this.getProducts();
   }
 
-  getTables() {
-    this.tableService.getTables().subscribe({
+  getProducts() {
+    this.productService.getProducts().subscribe({
       next: (response: any) => {
         if (response.ok) {
-          this.tables = response.results.map((table: Table) => {
-            return {
-              ...table,
-              table_status: this.reverseConvertStatus[table.table_status[0]],
-            };
-          });
-          this.dataSource.data = this.tables;
+          this.products = response.results;
+          this.dataSource.data = this.products;
           this.dataSource.paginator = this.paginator;
         }
       },
-      error: (error) => {
+      error: (err) => {
         Swal.fire({
-          title: 'Error!',
-          text:
-            error.error.error ||
-            error.error.data_error ||
-            "Error can't get the tables",
+          title: 'Error',
+          text: err.error.error || err.error.data_error || "Can't get products",
           icon: 'error',
           showCancelButton: false,
           showConfirmButton: false,
@@ -94,36 +89,32 @@ export class TableTablesComponent implements OnInit {
   onOpenModal(event: Event) {
     event.preventDefault();
     event.stopPropagation();
-    const modalTable = this.dialog.open(ModalTableComponent, {
-      width: '300px',
+    const modalProduct = this.dialog.open(ModalProductComponent, {
+      width: '500px',
     });
-
-    modalTable.afterClosed().subscribe((result) => {
+    modalProduct.afterClosed().subscribe((result) => {
       if (result?.ok) this.syncData();
     });
   }
 
-  onEdit(event: Event, table: Table) {
+  onEdit(event: Event, product: Product) {
     event.preventDefault();
     event.stopPropagation();
-    const modalTable = this.dialog.open(ModalTableComponent, {
-      width: '300px',
-      data: {
-        isEdit: true,
-        table,
-      },
+    const modalProduct = this.dialog.open(ModalProductComponent, {
+      width: '500px',
+      data: { isEdit: true, product },
     });
 
-    modalTable.afterClosed().subscribe((result) => {
+    modalProduct.afterClosed().subscribe((result) => {
       if (result?.ok) this.syncData();
     });
   }
 
-  onDelete(event: Event, table: Table) {
+  onDelete(event: Event, product: Product) {
     event.preventDefault();
     event.stopPropagation();
     Swal.fire({
-      title: 'Are you sure?',
+      title: `Are you sure delete this product ${product.name}?`,
       text: `You won't be able to revert this!`,
       icon: 'question',
       showCancelButton: true,
@@ -133,19 +124,17 @@ export class TableTablesComponent implements OnInit {
       cancelButtonText: 'No, cancel!',
       reverseButtons: true,
     }).then((result) => {
-      if (result.isConfirmed) {
-        this.deleteTable(table.id);
-      }
+      if (result.isConfirmed) this.deleteProduct(product.id);
     });
   }
 
-  deleteTable(id: number) {
-    this.tableService.deleteTable(id).subscribe({
+  deleteProduct(id: number) {
+    this.productService.deleteProduct(id).subscribe({
       next: (response: any) => {
-        if (response) {
+        if (response.ok) {
           Swal.fire({
             title: 'Deleted!',
-            text: 'The table has been deleted.',
+            text: response.results,
             icon: 'success',
             showCancelButton: false,
             showConfirmButton: false,
@@ -155,13 +144,11 @@ export class TableTablesComponent implements OnInit {
           this.syncData();
         }
       },
-      error: (error) => {
+      error: (err) => {
         Swal.fire({
-          title: 'Error!',
+          title: 'Error',
           text:
-            error.error.error ||
-            error.error.data_error ||
-            "Error can't delete the table",
+            err.error.error || err.error.data_error || "Can't delete product",
           icon: 'error',
           showCancelButton: false,
           showConfirmButton: false,
