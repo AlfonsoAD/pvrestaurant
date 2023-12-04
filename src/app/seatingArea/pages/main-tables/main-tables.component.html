@@ -1,0 +1,13 @@
+<main class="container">
+  <section
+    class="d-flex flex-column tables mat-elevation-z6"
+    [ngStyle]="{ gap: '0.5rem', margin: '1rem', padding: '1rem' }"
+  >
+    <h2><strong>Seating Area</strong></h2>
+    <div class="d-flex flex-row" [ngStyle]="{ gap: '1rem' }">
+      @for (table of tables; track $index) {
+      <app-card-table [table]="table"></app-card-table>
+      }
+    </div>
+  </section>
+</main>
