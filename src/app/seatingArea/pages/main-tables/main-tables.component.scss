@@ -1,0 +1,20 @@
+.container{
+    width: 100vw;
+    height: 100vh;
+    background-color: #2d90ff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tables{
+    background-color: #ffffff;
+    width: 90vw;
+    height: 90vh;
+    border-radius: 20px;
+}
+
+h2 > strong{
+    color: #0702a6;
+}

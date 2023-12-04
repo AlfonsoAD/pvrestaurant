@@ -1,0 +1,15 @@
+<article
+  class="d-flex flex-column justify-center align-center mat-elevation-z6"
+  [ngStyle]="{ 'border-radius': '20px', gap: '0.5rem' }"
+  (click)="createOrder($event, table)"
+>
+  <h2>
+    <strong>Table {{ table.number }}</strong>
+  </h2>
+  <img
+    ngSrc="../../../../assets/images/table.png"
+    alt="Image table"
+    width="150"
+    height="150"
+  />
+</article>

@@ -3,7 +3,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
 }
 
@@ -11,10 +11,10 @@ h1{
     color: #0702a6;
 }
 
-.modules{
-    display: grid;
-    grid-template-columns: 250px 250px;
-    grid-template-rows: 250px 250px;
-    gap:1rem;
-}
+// .modules{
+//     display: grid;
+//     grid-template-columns: 250px 250px;
+//     grid-template-rows: 250px 250px;
+//     gap:1rem;
+// }
 
