@@ -1,0 +1,28 @@
+<header class="header-menu">
+    <h1>PV RESTAURANT</h1>
+</header>
+
+<section class="section-menu">
+    <h2 class="h2-menu">Menú {{state}}</h2>
+    <div class="menu-container">
+        <mat-list class="menu-list">
+            @for (product of menuProducts; track product.id) {
+                <mat-list-item class="dish-details">
+                    <span class="dish-name">{{product.nombre}}</span>
+                    <span class="dish-description">{{product.descripcion}}</span>
+                    <span class="dish-price">{{product.precio}}</span>
+                </mat-list-item>
+                <div class="square-container">
+                    <div class="icon">
+                        <img src={{product.imagen}} alt="Icono 1">
+                    </div>
+                </div>
+            }
+        </mat-list>
+    </div>
+    <div class="sidebar">
+        @for (menu of menus; track menu) {
+            <button class="button" (click)="state = menu">Menu {{menu}}</button>
+        }
+    </div>
+</section>

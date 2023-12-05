@@ -18,8 +18,8 @@ export const modules = [
     image: 'assets/images/adminpanel.png',
   },
   {
-    name: 'Settings',
-    route: '/dashboard/settings',
+    name: 'Dish Menu',
+    route: 'public/menu',
     icon: 'settings',
     image: 'assets/images/settings.png',
   },

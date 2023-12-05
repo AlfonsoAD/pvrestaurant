@@ -7,6 +7,7 @@ import { validateTokenGuard } from './guards/validate-token.guard';
 import { DashboardComponent } from './shared/pages/dashboard/dashboard.component';
 import { MainCatalogsComponent } from './admin/pages/main-catalogs/main-catalogs.component';
 import { roleAdminGuard } from './guards/role-admin.guard';
+import { ViewMenuComponent } from './public/pages/view-menu/view-menu.component';
 
 export const routes: Routes = [
   {
@@ -31,4 +32,9 @@ export const routes: Routes = [
     ],
     canActivate: [authenticatedGuard, validateTokenGuard],
   },
+  {
+    title: 'Menus',
+    path: 'public/menu',
+    component: ViewMenuComponent
+  }
 ];

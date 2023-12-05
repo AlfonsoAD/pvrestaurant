@@ -235,4 +235,107 @@ th.mat-header-cell {
     border-radius: 25px !important;
     width: 100% !important;
     margin: 0px !important;
-  }
+}
+
+/*Estilos Menu Comida*/
+.header-menu{
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+.section-menu{
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.menu-container {
+    width: 60%;
+}
+
+.h2-menu {
+    color: #333;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-item {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.square-container {
+    width: 70px; /* Ancho del contenedor */
+    height: 70px; /* Altura del contenedor */
+    /*background-color: #2ecc71;*/ /* Color de fondo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px; /* Bordes redondeados (opcional) */
+    margin: 5px; /* Espaciado entre los contenedores */
+}
+
+  /* Tamaño máximo para las imágenes dentro de .icon */
+.icon img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Ajustar para contener el tamaño */
+    border-radius: 5px; /* Bordes redondeados (opcional) */
+}
+
+.dish-details {
+    flex: 1;
+}
+
+.dish-name {
+    font-weight: bold;
+    margin-right: 1%;
+}
+
+.dish-description {
+    color: #555;
+}
+
+.dish-price {
+    float: right;
+    font-weight: bold;
+    color: #333;
+}
+
+.sidebar {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ddd; /* Color de fondo para la barra lateral */
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.button {
+    margin: 10px 0; /* Espaciado superior e inferior de los botones */
+    padding: 10px;
+    cursor: pointer;
+    width: 80%; /* Ancho de los botones */
+    border: none;
+    background-color: #3498db; /* Color de fondo de los botones */
+    color: #fff; /* Color del texto de los botones */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #2980b9; /* Cambio de color al pasar el ratón */
+}
