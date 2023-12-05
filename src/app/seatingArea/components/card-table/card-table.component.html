@@ -1,6 +1,9 @@
 <article
+  [ngClass]="{ withOrder: table.hasOrder === true }"
   class="d-flex flex-column justify-center align-center mat-elevation-z6"
   [ngStyle]="{ 'border-radius': '20px', gap: '0.5rem' }"
+  matBadge="{{ table.hasOrder ? '1' : '' }}"
+  matBadgeSize="large"
   (click)="createOrder($event, table)"
 >
   <h2>

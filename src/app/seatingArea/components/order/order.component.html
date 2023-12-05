@@ -1,3 +1,108 @@
 <main class="layout">
-  <section class="order mat-elevation-z4 d-flex flex-column"></section>
+  <section class="order mat-elevation-z4 d-flex flex-column">
+    <div class="d-flex flex-row justify-between align-center w-100">
+      <h2>
+        <strong>New Order # {{ idOrder }}</strong>
+      </h2>
+
+      <button
+        type="button"
+        mat-icon-button
+        color="primary"
+        (click)="syncData($event)"
+      >
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+    <form
+      [formGroup]="form"
+      #ngForm
+      class="d-flex flex-row w-100"
+      [ngStyle]="{ gap: '0.5rem' }"
+    >
+      <mat-form-field class="w-50" appearance="outline">
+        <mat-label>Product</mat-label>
+        <mat-select
+          formControlName="product"
+          (selectionChange)="onSelectedProduct($event)"
+        >
+          @for (product of products; track $index) {
+          <mat-option [value]="product.name">
+            {{ product.name }}
+          </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-40" appearance="outline">
+        <mat-label>Quantity</mat-label>
+        <input matInput type="number" min="1" formControlName="quantity" />
+      </mat-form-field>
+      <button
+        type="button"
+        mat-flat-button
+        color="primary"
+        (click)="onSumit($event)"
+        [ngStyle]="{ height: '3.5rem' }"
+      >
+        Add
+      </button>
+    </form>
+    <section
+      class="d-flex flex-column"
+      [ngStyle]="{ gap: '0.5rem', margin: '1rem 0 1rem 0' }"
+    >
+      <span class="title-products"><strong>Products in the order</strong></span>
+      <div
+        role="listitem"
+        class="list-item w-100"
+        [ngStyle]="{ gap: '0.5rem' }"
+      >
+        <span class="header-title"><strong>Name</strong></span>
+        <span class="d-flex justify-center align-center header-title"
+          ><strong>Quantity</strong></span
+        >
+        <span class="d-flex justify-center align-center header-title"
+          ><strong>Price</strong></span
+        >
+      </div>
+      <mat-list role="list" class="w-100" [ngStyle]="{ gap: '0.5rem' }">
+        @for (detail of detailsOrder; track $index) {
+        <div
+          role="listitem"
+          class="list-item w-100"
+          [ngStyle]="{ gap: '1rem' }"
+        >
+          <span [ngStyle]="{ margin: '0.5rem 0 0.5rem 0' }"
+            ><strong>{{ detail.product.name }}</strong></span
+          >
+          <span
+            class="d-flex justify-center align-center"
+            [ngStyle]="{ margin: '0.5rem 0 0.5rem 0' }"
+            ><strong>{{ detail.articles_count }}</strong></span
+          >
+          <span
+            class="d-flex justify-center align-center"
+            [ngStyle]="{ margin: '0.5rem 0 0.5rem 0' }"
+            ><strong>{{ detail.unit_price }}</strong></span
+          >
+        </div>
+        }
+      </mat-list>
+    </section>
+    <div
+      class="w-100 d-flex justify-end align-center"
+      [ngStyle]="{ margin: '1rem' }"
+    >
+      <span class="subtotal" [ngStyle]="{ margin: '1rem 1.5rem 1rem 2rem' }"
+        ><strong>Subtotal: ${{ calculateSubtotal() }}</strong></span
+      >
+    </div>
+    <div class="w-100 d-flex flex-row justify-between align-center">
+      <button type="button" color="accent" mat-flat-button>Cancel order</button>
+      <span class="d-flex" [ngStyle]="{ gap: '0.5rem' }">
+        <button type="button" color="warn" mat-flat-button>Return</button>
+        <button type="button" color="primary" mat-flat-button>Finalize</button>
+      </span>
+    </div>
+  </section>
 </main>
