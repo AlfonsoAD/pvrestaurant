@@ -41,7 +41,7 @@
         type="button"
         mat-flat-button
         color="primary"
-        (click)="onSumit($event)"
+        (click)="onSubmit($event)"
         [ngStyle]="{ height: '3.5rem' }"
       >
         Add
@@ -85,6 +85,27 @@
             [ngStyle]="{ margin: '0.5rem 0 0.5rem 0' }"
             ><strong>{{ detail.unit_price }}</strong></span
           >
+          <span
+            class="d-flex justify-center align-center"
+            [ngStyle]="{ margin: '0.5rem 0 0.5rem 0' }"
+          >
+            <button
+              type="button"
+              mat-icon-button
+              color="primary"
+              (click)="editDetailOrder($event, detail)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              type="button"
+              mat-icon-button
+              class="delete"
+              (click)="cancelDetailOrder($event, detail)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </span>
         </div>
         }
       </mat-list>
@@ -98,10 +119,31 @@
       >
     </div>
     <div class="w-100 d-flex flex-row justify-between align-center">
-      <button type="button" color="accent" mat-flat-button>Cancel order</button>
+      <button
+        type="button"
+        color="accent"
+        mat-flat-button
+        (click)="orderCancel($event)"
+      >
+        Cancel order
+      </button>
       <span class="d-flex" [ngStyle]="{ gap: '0.5rem' }">
-        <button type="button" color="warn" mat-flat-button>Return</button>
-        <button type="button" color="primary" mat-flat-button>Finalize</button>
+        <button
+          type="button"
+          color="warn"
+          mat-flat-button
+          (click)="return($event)"
+        >
+          Return
+        </button>
+        <button
+          type="button"
+          color="primary"
+          mat-flat-button
+          (click)="finalizeOrder($event)"
+        >
+          Finalize
+        </button>
       </span>
     </div>
   </section>

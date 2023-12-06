@@ -10,13 +10,18 @@ import {
 } from '@angular/common/http';
 import { headersInterceptor } from './interceptors/headers.interceptor';
 import { loadingInterceptor } from './interceptors/loading.interceptor';
+import { authInterceptor } from './interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimations(),
     provideHttpClient(
-      withInterceptors([headersInterceptor, loadingInterceptor])
+      withInterceptors([
+        headersInterceptor,
+        authInterceptor,
+        loadingInterceptor,
+      ])
     ),
   ],
 };

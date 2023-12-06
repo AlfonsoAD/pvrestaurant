@@ -17,10 +17,4 @@ export const modules = [
     icon: 'admin_panel_settings',
     image: 'assets/images/adminpanel.png',
   },
-  {
-    name: 'Settings',
-    route: '/dashboard/settings',
-    icon: 'settings',
-    image: 'assets/images/settings.png',
-  },
 ];

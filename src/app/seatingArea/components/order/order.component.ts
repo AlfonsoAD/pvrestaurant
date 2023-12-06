@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { Product } from '../../../interfaces/products.interface';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { OrderService } from '../../services/order.service';
 import Swal from 'sweetalert2';
@@ -44,10 +44,12 @@ export class OrderComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private detailsOrderService: OrderService,
+    private orderService: OrderService,
     private productService: ProductsService
   ) {
-    route.params.subscribe((params) => {
+    this.route.params.subscribe((params) => {
       this.idOrder = params['id'];
     });
   }
@@ -105,7 +107,108 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  onSumit(event: Event) {
+  orderCancel(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this order!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, cancel it!',
+      cancelButtonText: 'No, keep it',
+      confirmButtonColor: '#0702a6',
+      cancelButtonColor: '#de3131',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) this.deleteOrder(this.idOrder);
+    });
+  }
+
+  updateStatusOrder(isFinalize: boolean, body: any) {
+    this.orderService.patchOrder(this.idOrder, body).subscribe({
+      next: (resp: any) => {
+        if (resp && isFinalize) {
+          Swal.fire({
+            title: 'Success!',
+            text: 'Order finalized',
+            icon: 'success',
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+          });
+          this.router.navigateByUrl('/dashboard/seating-area');
+        }
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Error!',
+          text:
+            err.error.error ||
+            err.error.data_error ||
+            "Can't update order status",
+          icon: 'error',
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+      },
+    });
+  }
+
+  deleteOrder(id: number) {
+    this.orderService.deleteOrder(id).subscribe({
+      next: (resp: any) => {
+        if (resp) {
+          Swal.fire({
+            title: 'Success!',
+            text: 'Order canceled',
+            icon: 'success',
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+          });
+          this.router.navigateByUrl('/dashboard/seating-area');
+        }
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Error!',
+          text: err.error.error || err.error.data_error || "Can't cancel order",
+          icon: 'error',
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+      },
+    });
+  }
+
+  finalizeOrder(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    Swal.fire({
+      title: 'Are you sure to finish the order?',
+      text: 'You will not be able to recover this order!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, finalize it!',
+      cancelButtonText: 'No, keep it',
+      confirmButtonColor: '#0702a6',
+      cancelButtonColor: '#de3131',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed)
+        this.updateStatusOrder(true, { process_status: ['orderCompleted'] });
+    });
+  }
+
+  onSubmit(event: Event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -149,6 +252,8 @@ export class OrderComponent implements OnInit {
             timerProgressBar: true,
           });
           this.clearForm();
+          if (this.detailsOrder.length === 0)
+            this.updateStatusOrder(false, { process_status: ['orderActive'] });
         }
       },
       error: (error) => {
@@ -166,6 +271,60 @@ export class OrderComponent implements OnInit {
         });
       },
       complete: () => this.getDetailsOrder(),
+    });
+  }
+
+  editDetailOrder(event: Event, detail: DetailOrder) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  cancelDetailOrder(event: Event, detail: DetailOrder) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this product!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, cancel it!',
+      cancelButtonText: 'No, keep it',
+      confirmButtonColor: '#0702a6',
+      cancelButtonColor: '#de3131',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) this.deleteDetailOrder(detail.id);
+    });
+  }
+
+  deleteDetailOrder(id: number) {
+    this.detailsOrderService.deleteDetailOrder(id).subscribe({
+      next: (resp: any) => {
+        if (resp) {
+          Swal.fire({
+            title: 'Success!',
+            text: 'Product canceled',
+            icon: 'success',
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+          });
+          this.syncData();
+        }
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Error!',
+          text: err.error.error || err.error.data_error || "Can't cancel order",
+          icon: 'error',
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+      },
     });
   }
 
@@ -187,5 +346,11 @@ export class OrderComponent implements OnInit {
       product: '',
       quantity: '',
     });
+  }
+
+  return(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.router.navigateByUrl('/dashboard/seating-area');
   }
 }

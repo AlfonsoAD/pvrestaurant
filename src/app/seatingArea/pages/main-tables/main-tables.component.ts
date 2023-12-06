@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableService } from '../../../admin/services/table.service';
 import Swal from 'sweetalert2';
@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './main-tables.component.html',
   styleUrl: './main-tables.component.scss',
 })
-export class MainTablesComponent implements OnInit {
+export class MainTablesComponent implements OnInit, OnChanges {
   tables: Table[] = [];
   orders: Order[] = [];
 
@@ -28,6 +28,8 @@ export class MainTablesComponent implements OnInit {
   ngOnInit(): void {
     this.syncData();
   }
+
+  ngOnChanges() {}
 
   syncData(event?: Event) {
     event?.preventDefault();
@@ -60,7 +62,9 @@ export class MainTablesComponent implements OnInit {
     this.orderService.getOrders().subscribe({
       next: (response: any) => {
         if (response.ok) {
-          this.orders = response.results;
+          this.orders = response.results.filter((order: Order) =>
+            order.process_status.includes('orderPending' || 'orderActive')
+          );
         }
       },
       error: (err) => {
@@ -75,7 +79,7 @@ export class MainTablesComponent implements OnInit {
           timerProgressBar: true,
         });
       },
-      complete: () => this.checkTablesInOrder(),
+      complete: () => setTimeout(() => this.checkTablesInOrder(), 100),
     });
   }
 
