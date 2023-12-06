@@ -62,8 +62,10 @@ export class MainTablesComponent implements OnInit, OnChanges {
     this.orderService.getOrders().subscribe({
       next: (response: any) => {
         if (response.ok) {
-          this.orders = response.results.filter((order: Order) =>
-            order.process_status.includes('orderPending' || 'orderActive')
+          this.orders = response.results.filter(
+            (order: Order) =>
+              order.process_status.includes('orderPending') ||
+              order.process_status.includes('orderActive')
           );
         }
       },

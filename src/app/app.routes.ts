@@ -10,6 +10,7 @@ import { roleAdminGuard } from './guards/role-admin.guard';
 import { roleWaiterGuard } from './guards/role-waiter.guard';
 import { MainTablesComponent } from './seatingArea/pages/main-tables/main-tables.component';
 import { OrderPageComponent } from './seatingArea/pages/order-page/order-page.component';
+import { NotFoundComponent } from './shared/pages/not-found/not-found.component';
 
 export const routes: Routes = [
   {
@@ -45,7 +46,7 @@ export const routes: Routes = [
     canActivate: [authenticatedGuard, validateTokenGuard],
   },
   {
-    title: 'PV Restaurant Dish Menu',
-    path: 'public/menu',
+    path: '**',
+    component: NotFoundComponent,
   },
 ];

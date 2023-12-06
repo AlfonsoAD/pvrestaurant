@@ -13,6 +13,8 @@ import Swal from 'sweetalert2';
 import { ProductsService } from '../../../admin/services/products.service';
 import { DetailOrder } from '../../../interfaces/order.interface';
 import { MatListModule } from '@angular/material/list';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalDetailOrderComponent } from '../modal-detail-order/modal-detail-order.component';
 
 @Component({
   selector: 'app-order',
@@ -47,7 +49,8 @@ export class OrderComponent implements OnInit {
     private router: Router,
     private detailsOrderService: OrderService,
     private orderService: OrderService,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private dialog: MatDialog
   ) {
     this.route.params.subscribe((params) => {
       this.idOrder = params['id'];
@@ -277,6 +280,14 @@ export class OrderComponent implements OnInit {
   editDetailOrder(event: Event, detail: DetailOrder) {
     event.preventDefault();
     event.stopPropagation();
+    const modal = this.dialog.open(ModalDetailOrderComponent, {
+      width: '400px',
+      data: { detail },
+    });
+
+    modal.afterClosed().subscribe((res) => {
+      if (res.ok) this.syncData();
+    });
   }
 
   cancelDetailOrder(event: Event, detail: DetailOrder) {

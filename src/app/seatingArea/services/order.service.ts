@@ -54,6 +54,15 @@ export class OrderService {
     return this.httpClient.post(url, body, { headers });
   }
 
+  patchDetailOrder(id: number, body: any) {
+    const url = `${this.baseURL}details_order/${id}/`;
+    const headers = new HttpHeaders();
+    return this.httpClient.patch(url, body, { headers }).pipe(
+      take(1),
+      map((response: any) => response.ok)
+    );
+  }
+
   deleteDetailOrder(id: number) {
     const url = `${this.baseURL}details_order/${id}/`;
     const headers = new HttpHeaders();
