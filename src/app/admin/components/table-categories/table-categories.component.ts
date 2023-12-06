@@ -12,6 +12,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CategoriesService } from '../../services/categories.service';
 import { Category } from '../../../interfaces/categories.interface';
 import { ModalCategorieComponent } from '../modal-categorie/modal-categorie.component';
+import { DocumentsService } from '../../../shared/services/documents.service';
+import { convertStringToPDF } from '../../../utils/functions';
 
 @Component({
   selector: 'app-table-categories',
@@ -44,7 +46,8 @@ export class TableCategoriesComponent implements OnInit {
 
   constructor(
     private categoriesService: CategoriesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private documentService: DocumentsService
   ) {}
 
   ngOnInit() {
@@ -149,5 +152,88 @@ export class TableCategoriesComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  generateCSV(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    Swal.fire({
+      title: 'Generating PDF',
+      text: 'Please wait...',
+      icon: 'info',
+      showCancelButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      timer: 2500,
+      timerProgressBar: true,
+    });
+
+    this.documentService.getCSVCategories().subscribe({
+      next: (resp: any) => {
+        if (resp.ok) {
+          const csvBase64 = resp.results;
+          const csvData = atob(csvBase64);
+          const blob = new Blob([csvData], { type: 'text/csv' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'categories.csv';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        }
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Error',
+          text: 'An error has occurred',
+          icon: 'error',
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+        });
+      },
+    });
+  }
+
+  generatePDF(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    Swal.fire({
+      title: 'Generating PDF',
+      text: 'Please wait...',
+      icon: 'info',
+      showCancelButton: false,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      timer: 2500,
+      timerProgressBar: true,
+    });
+
+    this.documentService.getPDFCategories().subscribe({
+      next: (resp: any) => {
+        if (resp.ok) {
+          const dataurl = `data:application/pdf;base64,${resp.results}`;
+          const pdf = convertStringToPDF(dataurl);
+          const url = window.URL.createObjectURL(pdf);
+          window.open(url, '_blank');
+        }
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Error',
+          text: 'An error has occurred',
+          icon: 'error',
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+        });
+      },
+    });
   }
 }
