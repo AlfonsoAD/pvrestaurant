@@ -44,4 +44,8 @@ export const routes: Routes = [
     ],
     canActivate: [authenticatedGuard, validateTokenGuard],
   },
+  {
+    title: 'PV Restaurant Dish Menu',
+    path: 'public/menu',
+  },
 ];
