@@ -8,6 +8,9 @@ import { DashboardComponent } from './shared/pages/dashboard/dashboard.component
 import { MainCatalogsComponent } from './admin/pages/main-catalogs/main-catalogs.component';
 import { roleAdminGuard } from './guards/role-admin.guard';
 import { ViewMenuComponent } from './public/pages/view-menu/view-menu.component';
+import { roleWaiterGuard } from './guards/role-waiter.guard';
+import { MainTablesComponent } from './seatingArea/pages/main-tables/main-tables.component';
+import { OrderPageComponent } from './seatingArea/pages/order-page/order-page.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +31,16 @@ export const routes: Routes = [
         path: 'admin',
         component: MainCatalogsComponent,
         canActivate: [roleAdminGuard],
+      },
+      {
+        path: 'seating-area',
+        component: MainTablesComponent,
+        canActivate: [roleWaiterGuard],
+      },
+      {
+        path: 'seating-area/order/:id',
+        component: OrderPageComponent,
+        canActivate: [roleWaiterGuard],
       },
     ],
     canActivate: [authenticatedGuard, validateTokenGuard],

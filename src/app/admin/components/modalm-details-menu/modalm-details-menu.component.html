@@ -1,0 +1,57 @@
+<mat-dialog-content class="d-flex flex-column" [ngStyle]="{ gap: '0.5rem' }">
+  <div
+    class="d-flex flex-row justify-between align-center"
+    [ngStyle]="{ height: '2rem' }"
+  >
+    <h1 mat-dialog-title>Add Product to Menu</h1>
+    <button mat-icon-button mat-dialog-close color="primary">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider role="separator" class="divider"></mat-divider>
+  <div
+    class="d-flex flex-column"
+    [ngStyle]="{ gap: '0.5rem', 'margin-top': '10px' }"
+  >
+    <form
+      #ngForm
+      [formGroup]="form"
+      class="d-flex flex-column"
+      [ngStyle]="{ gap: '0.5rem' }"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Menu</mat-label>
+        <mat-select
+          formControlName="menu"
+          (selectionChange)="onSelectedMenu($event)"
+        >
+          @for (menu of menus; track menu.id) {
+          <mat-option [value]="menu.name">{{ menu.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Product</mat-label>
+        <mat-select
+          formControlName="product"
+          (selectionChange)="onSelectedProduct($event)"
+        >
+          @for (product of products; track product.id) {
+          <mat-option [value]="product.name">{{ product.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex flex-row justify-end align-center">
+  <button
+    type="button"
+    mat-flat-button
+    color="primary"
+    (click)="onSubmit($event)"
+  >
+    <mat-icon>save</mat-icon>
+    Save
+  </button>
+</mat-dialog-actions>

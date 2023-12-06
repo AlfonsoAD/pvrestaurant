@@ -1,13 +1,13 @@
 export const modules = [
-  {
-    name: 'Cash register',
-    route: '/dashboard/cash-register',
-    icon: 'shopping_cart',
-    image: 'assets/images/cashregister.png',
-  },
+  //{
+  //name: 'Cash register',
+  //route: '/dashboard/cash-register',
+  //icon: 'shopping_cart',
+  //image: 'assets/images/cashregister.png',
+  //},
   {
     name: 'Seating area',
-    route: 'dashboard/seating-area',
+    route: '/dashboard/seating-area',
     icon: 'restaurant',
     image: 'assets/images/seatingarea.png',
   },
