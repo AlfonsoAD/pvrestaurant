@@ -19,7 +19,7 @@ export const modules = [
   },
   {
     name: 'Dish Menu',
-    route: 'public/menu',
+    route: '/public/menu',
     icon: 'settings',
     image: 'assets/images/settings.png',
   },

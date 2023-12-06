@@ -16,6 +16,10 @@ import Swal from 'sweetalert2';
 import { strongPasswordRegex } from '../../../utils/regexp';
 import { UsersService } from '../../services/users.service';
 import { ListUser } from '../../../interfaces/user.interface';
+import {
+  MatCheckboxChange,
+  MatCheckboxModule,
+} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-modal-user',
@@ -30,6 +34,7 @@ import { ListUser } from '../../../interfaces/user.interface';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatCheckboxModule,
   ],
   templateUrl: './modal-user.component.html',
   styleUrl: './modal-user.component.scss',
@@ -66,6 +71,8 @@ export class ModalUserComponent implements OnInit {
     cashier: 'Cashier',
     waiter: 'Waiter',
   };
+
+  showPassword: boolean = true;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) data: any,
@@ -241,5 +248,9 @@ export class ModalUserComponent implements OnInit {
       this.form.controls.password.markAllAsTouched();
       this.form.controls.password_confirm.markAllAsTouched();
     }
+  }
+
+  onChangeShowHidePassword(event: MatCheckboxChange) {
+    this.showPassword = event.checked ? false : true;
   }
 }

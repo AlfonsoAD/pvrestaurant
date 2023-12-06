@@ -14,6 +14,11 @@ import { MatInputModule } from '@angular/material/input';
 import { strongPasswordRegex } from '../../../utils/regexp';
 import Swal from 'sweetalert2';
 import { UsersService } from '../../services/users.service';
+import {
+  MatCheckbox,
+  MatCheckboxChange,
+  MatCheckboxModule,
+} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-modal-user-changepassword',
@@ -27,6 +32,7 @@ import { UsersService } from '../../services/users.service';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatCheckboxModule,
   ],
   templateUrl: './modal-user-changepassword.component.html',
   styleUrl: './modal-user-changepassword.component.scss',
@@ -43,6 +49,7 @@ export class ModalUserChangepasswordComponent {
     ],
   });
 
+  showPassword: boolean = true;
   userId!: number;
   username: string = '';
 
@@ -125,5 +132,9 @@ export class ModalUserChangepasswordComponent {
       this.form.controls.password.markAllAsTouched();
       this.form.controls.password_confirm.markAllAsTouched();
     }
+  }
+
+  onChangeShowHidePassword(event: MatCheckboxChange) {
+    this.showPassword = event.checked ? false : true;
   }
 }

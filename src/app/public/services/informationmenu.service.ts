@@ -12,7 +12,7 @@ export class informationmenuService {
 
   getMenusDetails(id: string) {
     const url = `${this.baseURL}productsMenu/${id}`;
-    const headers = new HttpHeaders();
+    const headers = new HttpHeaders().set("skipToken", 'true');
     return this.httpClient.get(url, { headers });
   }
 }

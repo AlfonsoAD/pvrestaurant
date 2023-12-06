@@ -11,8 +11,8 @@ export class MenuService {
   constructor(private httpClient: HttpClient) {}
 
   getMenus() {
-    const url = `${this.baseURL}menu`;
-    const headers = new HttpHeaders();
+    const url = `${this.baseURL}public/menus`;
+    const headers = new HttpHeaders().set("skipToken", 'true');
     return this.httpClient.get(url, { headers });
   }
 }
