@@ -12,6 +12,23 @@
       <button
         type="button"
         mat-flat-button
+        class="excel"
+        (click)="generateCSV($event)"
+      >
+        Print CSV
+      </button>
+      <button
+        type="button"
+        mat-flat-button
+        class="pdf"
+        (click)="generatePDF($event)"
+      >
+        <mat-icon>picture_as_pdf</mat-icon>
+        Print PDF
+      </button>
+      <button
+        type="button"
+        mat-flat-button
         color="warn"
         (click)="onOpenModal($event)"
       >

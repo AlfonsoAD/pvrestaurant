@@ -1,0 +1,27 @@
+<main class="d-flex flex-column justify-center align-center">
+  <section
+    class="d-flex flex-column justify-center align-center"
+    [ngStyle]="{ margin: '2rem' }"
+  >
+    <img
+      ngSrc="../../../../assets/images/notfound.png"
+      alt="Not found image"
+      width="450"
+      height="450"
+    />
+    <h1><strong> Page not found</strong></h1>
+    <h3>
+      <strong
+        >Oops! it looks like someone took what you were looking for</strong
+      >
+    </h3>
+    <button
+      type="button"
+      mat-flat-button
+      color="primary"
+      (click)="return($event)"
+    >
+      Back to menu
+    </button>
+  </section>
+</main>

@@ -5,3 +5,21 @@ h2 > strong{
 article{
     width: 200px !important;
 }
+
+@keyframes withOrder {
+    0% {
+        border-color: rgb(10, 89, 6);
+        box-shadow: 0 0 0.5rem rgba(133, 255, 153, 0.7); 
+    }
+    50% {
+        border-color: rgb(10, 89, 6);
+        box-shadow: 0 0 1rem rgba(133, 255, 153, 0.7); 
+    }
+    100% {
+        border-color: rgb(10, 89, 6);
+        box-shadow: 0 0 1.2rem rgba(133, 255, 153, 0.7); 
+    }
+}
+
+.withOrder {
+  animation: withOrder 2s infinite; }

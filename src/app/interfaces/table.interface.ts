@@ -4,4 +4,5 @@ export interface Table {
   capacity: number;
   table_status: string[];
   is_active: boolean;
+  hasOrder?: boolean;
 }
