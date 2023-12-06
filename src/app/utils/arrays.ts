@@ -17,4 +17,10 @@ export const modules = [
     icon: 'admin_panel_settings',
     image: 'assets/images/adminpanel.png',
   },
+  {
+    name: 'Dish Menu',
+    route: '/public/menu',
+    icon: 'settings',
+    image: 'assets/images/settings.png',
+  },
 ];
