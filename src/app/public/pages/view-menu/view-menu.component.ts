@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatListModule} from '@angular/material/list';
+import { Menu } from '../../../interfaces/menu.interface';
+import { MenuService } from '../../services/menu.service';
+import { informationMenu } from '../../../interfaces/informationMenu.interface';
+import { informationmenuService } from '../../services/informationmenu.service';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-view-menu',
@@ -10,31 +15,60 @@ import {MatListModule} from '@angular/material/list';
   styleUrl: './view-menu.component.scss'
 })
 export class ViewMenuComponent {
-  menus = ['Normal','Invierno','Verano'];
-  state = this.menus[0];
-  columns = ['Name','Image','price']
-  menuProducts = [
-    {
-      id: "1",
-      nombre: 'Pozole',
-      descripcion: 'tostadas de pollo, con verduras frescas y arroz',
-      imagen: 'https://scontent.fntr6-1.fna.fbcdn.net/v/t1.6435-9/106673059_1182365365436128_3304146531639679157_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=dd63ad&_nc_eui2=AeEsdzOTEfSOn-IkXbyj41vvMP4-LIA_b0Yw_j4sgD9vRrdSgwmMfUSosQVqDpEWEbcUp1h_N-1wPxz-A_A2r33J&_nc_ohc=zx_nsg_DR8EAX9QCNLo&_nc_ht=scontent.fntr6-1.fna&oh=00_AfAmaT32U1X62t_XDMsVPOcF4cfXlAQhfQqcPW0GZMHN7w&oe=65960EAF',
-      precio: '55$'
-    },
-    {
-      id: "2",
-      nombre: 'Hamburguesa',
-      descripcion: 'tostadas de pollo, con verduras frescas y arroz',
-      imagen: 'https://scontent.fntr6-1.fna.fbcdn.net/v/t1.6435-9/106673059_1182365365436128_3304146531639679157_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=dd63ad&_nc_eui2=AeEsdzOTEfSOn-IkXbyj41vvMP4-LIA_b0Yw_j4sgD9vRrdSgwmMfUSosQVqDpEWEbcUp1h_N-1wPxz-A_A2r33J&_nc_ohc=zx_nsg_DR8EAX9QCNLo&_nc_ht=scontent.fntr6-1.fna&oh=00_AfAmaT32U1X62t_XDMsVPOcF4cfXlAQhfQqcPW0GZMHN7w&oe=65960EAF',
-      precio: '55$'
-    },
-    {
-      id: "3",
-      nombre: 'Tostadas de pollo',
-      descripcion: 'tostadas de pollo, con verduras frescas y arroz',
-      imagen: 'https://scontent.fntr6-1.fna.fbcdn.net/v/t1.6435-9/106673059_1182365365436128_3304146531639679157_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=dd63ad&_nc_eui2=AeEsdzOTEfSOn-IkXbyj41vvMP4-LIA_b0Yw_j4sgD9vRrdSgwmMfUSosQVqDpEWEbcUp1h_N-1wPxz-A_A2r33J&_nc_ohc=zx_nsg_DR8EAX9QCNLo&_nc_ht=scontent.fntr6-1.fna&oh=00_AfAmaT32U1X62t_XDMsVPOcF4cfXlAQhfQqcPW0GZMHN7w&oe=65960EAF',
-      precio: '55$'
-    }
-  ]
+  menus: Menu[] = []
+  stateTitle: String = "";
+  stateID: string = "";
+  details: informationMenu[] = []
+  imageLink:string = environment.cloudinaryURL
+  constructor(private menuService: MenuService, private detailsService: informationmenuService) {}
 
+  ngOnInit(): void {
+    this.syncData();
+  }
+
+  syncData(event?: Event) {
+    event?.preventDefault();
+    event?.stopPropagation();
+    this.getMenus();
+  }
+
+  getMenus() {
+    this.menuService.getMenus().subscribe({
+      next: (response: any) => {
+        if (response.ok) {
+          this.menus = response.results;
+          this.stateTitle = this.menus[0].name;
+          this.stateID = String(this.menus[0].id);
+          this.getInformation(this.stateID);
+          console.log(this.menus)
+          console.log(this.stateID)
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  getInformation(id: string) {
+    this.detailsService.getMenusDetails(id).subscribe({
+      next: (response: any) => {
+        if (response.ok) {
+          this.details = response.results;
+          console.log(this.details);
+          console.log(this.details[0].product)
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  changeState(tittle: string, id: string) {
+    this.stateID = id;
+    this.stateTitle = tittle;
+    this.getInformation(this.stateID)
+    console.log(this.stateID);
+  }
 }

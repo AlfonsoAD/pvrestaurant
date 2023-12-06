@@ -3,26 +3,26 @@
 </header>
 
 <section class="section-menu">
-    <h2 class="h2-menu">Menú {{state}}</h2>
+    <h2 class="h2-menu">Menú {{stateTitle}}</h2>
     <div class="menu-container">
         <mat-list class="menu-list">
-            @for (product of menuProducts; track product.id) {
+            @for (detail of details; track detail.product.id) {
                 <mat-list-item class="dish-details">
-                    <span class="dish-name">{{product.nombre}}</span>
-                    <span class="dish-description">{{product.descripcion}}</span>
-                    <span class="dish-price">{{product.precio}}</span>
+                    <span class="dish-name">{{detail.product.name}}</span>
+                    <span class="dish-description">{{detail.product.description}}</span>
+                    <span class="dish-price">{{detail.product.price}}</span>
                 </mat-list-item>
                 <div class="square-container">
                     <div class="icon">
-                        <img src={{product.imagen}} alt="Icono 1">
+                        <img src={{imageLink+detail.product.image}} alt="Icono 1">
                     </div>
                 </div>
             }
         </mat-list>
     </div>
     <div class="sidebar">
-        @for (menu of menus; track menu) {
-            <button class="button" (click)="state = menu">Menu {{menu}}</button>
+        @for (menu of menus; track menu.id) {
+            <button class="button" (click)="changeState(menu.name, menu.id.toString())">Menu {{menu.name}}</button>
         }
     </div>
 </section>
