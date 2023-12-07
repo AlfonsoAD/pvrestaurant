@@ -14,31 +14,35 @@ export class DocumentsService {
     const url = `${this.baseURLFlask}products`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      skipToken: 'true',
     });
-    return this.httpClient.get(url, { headers, withCredentials: true });
+    return this.httpClient.get(url, { headers });
   }
 
   getCSVCategories() {
     const url = `${this.baseURLFlask}categories`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      skipToken: 'true',
     });
-    return this.httpClient.get(url, { headers, withCredentials: true });
+    return this.httpClient.get(url, { headers });
   }
 
   getPDFProducts() {
     const url = `${this.baseURLFlask}products-pdf`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      skipToken: 'true',
     });
-    return this.httpClient.get(url, { headers, withCredentials: true });
+    return this.httpClient.get(url, { headers });
   }
 
   getPDFCategories() {
     const url = `${this.baseURLFlask}categories-pdf`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      skipToken: 'true',
     });
-    return this.httpClient.get(url, { headers, withCredentials: true });
+    return this.httpClient.get(url, { headers });
   }
 }

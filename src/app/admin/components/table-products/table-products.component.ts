@@ -185,13 +185,15 @@ export class TableProductsComponent implements OnInit {
     this.documentService.getCSVProducts().subscribe({
       next: (resp: any) => {
         if (resp.ok) {
-          const csvBase64 = resp.results;
-          const csvData = atob(csvBase64);
-          const blob = new Blob([csvData], { type: 'text/csv' });
+          const base_64_string = resp.csv_base64;
+          const csvContent = atob(base_64_string);
+          const blob = new Blob([csvContent], {
+            type: 'data:application/octet-stream;base64',
+          });
           const url = URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = url;
-          link.download = 'categories.csv';
+          link.download = 'products.csv';
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
