@@ -7,15 +7,18 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { MatBadgeModule } from '@angular/material/badge';
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-card-table',
   standalone: true,
+
   imports: [CommonModule, NgOptimizedImage, MatBadgeModule],
   templateUrl: './card-table.component.html',
   styleUrl: './card-table.component.scss',
 })
 export class CardTableComponent {
   @Input() table!: Table;
+
   @Input() order!: any;
 
   get user() {
@@ -31,6 +34,7 @@ export class CardTableComponent {
   createOrder(event: Event, table: Table) {
     event.preventDefault();
     event.stopPropagation();
+
 
     if (table.hasOrder && this.order) {
       this.router.navigateByUrl(

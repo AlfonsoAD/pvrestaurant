@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -19,6 +20,7 @@ import { ModalDetailOrderComponent } from '../modal-detail-order/modal-detail-or
 @Component({
   selector: 'app-order',
   standalone: true,
+
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -1,17 +1,21 @@
+
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableService } from '../../../admin/services/table.service';
 import Swal from 'sweetalert2';
 import { Table } from '../../../interfaces/table.interface';
 import { CardTableComponent } from '../../components/card-table/card-table.component';
+
 import { OrderService } from '../../services/order.service';
 import { Order } from '../../../interfaces/order.interface';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
+
 @Component({
   selector: 'app-main-tables',
   standalone: true,
+
   imports: [CommonModule, CardTableComponent, MatIconModule, MatButtonModule],
   templateUrl: './main-tables.component.html',
   styleUrl: './main-tables.component.scss',
@@ -29,13 +33,17 @@ export class MainTablesComponent implements OnInit, OnChanges {
     this.syncData();
   }
 
+
   ngOnChanges() {}
+
 
   syncData(event?: Event) {
     event?.preventDefault();
     event?.stopPropagation();
     this.getTables();
+
     this.getOrders();
+
   }
 
   getTables() {
@@ -57,6 +65,7 @@ export class MainTablesComponent implements OnInit, OnChanges {
       },
     });
   }
+
 
   getOrders() {
     this.orderService.getOrders().subscribe({
@@ -95,4 +104,5 @@ export class MainTablesComponent implements OnInit, OnChanges {
   orderTable(table: Table) {
     return this.orders.find((order) => order.table === table.id);
   }
+
 }
